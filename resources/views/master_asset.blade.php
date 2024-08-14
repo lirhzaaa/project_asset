@@ -674,7 +674,33 @@ function findAssetById(assetId) {
     };
 }
 
+function openDeleteConfirmationPopup(assetId) {
+    // Simpan assetId yang akan dihapus ke dalam elemen tersembunyi atau variabel global
+    document.getElementById("deleteAssetId").value = assetId;
+    let deleteConfirmationPopup = document.getElementById("deleteConfirmationPopup");
+    deleteConfirmationPopup.style.display = "block";
+    document.body.style.overflow = 'hidden';
+}
 
+function deleteAsset() {
+    let assetId = document.getElementById("deleteAssetId").value;
+    
+    // Lakukan penghapusan melalui AJAX atau redirect ke URL penghapusan
+    fetch(`/asset/delete/${assetId}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    }).then(response => {
+        if (response.ok) {
+            alert("Asset berhasil dihapus!"); 
+            closeDeleteConfirmationPopup();
+            location.reload(); // Reload halaman setelah penghapusan
+        } else {
+            alert("Terjadi kesalahan saat menghapus asset!");
+        }
+    });
+}
 
     </script>
 
