@@ -15,6 +15,7 @@ class AssetController extends Controller
 
         // Mengembalikan tampilan master_asset dengan data asset
         return view('master_asset', ['assets' => $assets]);
+        
     }
 
     public function create()

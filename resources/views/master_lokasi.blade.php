@@ -501,17 +501,17 @@ th {
                         <span>Status Asset</span>
                     </a>
                 </li>
+                <li>
                     <a href="{{ route('peminjaman_asset') }}">
                         <i class="fas fa-people-carry"></i>
                         <span>Peminjaman Asset</span>
                     </a>
-                <li>
-                    <li class="active">
+                </li>
+                <li class="active">
                     <a href="{{ route('master_lokasi') }}">
                         <i class="fas fa-map-marker-alt"></i>
                         <span>Master Lokasi</span>
                     </a>
-                    </li>
                 </li>
             </ul>
 
@@ -536,7 +536,6 @@ th {
                             <tr>
                                 <th>Kode</th>
                                 <th>Lokasi</th>
-                                <th>Jumlah Gedung</th>
                                 <th>Total Asset</th>
                                 <th>Aksi</th>
                             </tr>
@@ -545,7 +544,6 @@ th {
                             <tr>
                                 <td>L-001</td>
                                 <td>Kebayoran Lama</td>
-                                <td>2</td>
                                 <td>6</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -554,7 +552,6 @@ th {
                             <tr>
                                 <td>L-002</td>
                                 <td>Tangerang Selatan</td>
-                                <td>1</td>
                                 <td>3</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -563,7 +560,6 @@ th {
                             <tr>
                                 <td>L-003</td>
                                 <td>Jakarta Selatan</td>
-                                <td>3</td>
                                 <td>9</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -572,7 +568,6 @@ th {
                             <tr>
                                 <td>L-004</td>
                                 <td>Jakarta Barat</td>
-                                <td>5</td>
                                 <td>10</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -581,7 +576,6 @@ th {
                             <tr>
                                 <td>L-005</td>
                                 <td>Jawa Barat</td>
-                                <td>2</td>
                                 <td>4</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -590,7 +584,6 @@ th {
                             <tr>
                                 <td>L-006</td>
                                 <td>Jakarta Tenggara</td>
-                                <td>6</td>
                                 <td>7</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -599,7 +592,6 @@ th {
                             <tr>
                                 <td>L-007</td>
                                 <td>Jakarta Utara</td>
-                                <td>9</td>
                                 <td>5</td>
                                 <td>
                                     <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
@@ -610,58 +602,33 @@ th {
                     <div class="table-footer">
                         Showing 1 to 10 of 10 entries
                     </div>
-                        </tbody>
-                    </table>
                 </div>
+
                 <div id="detailModal" class="modal">
                     <div class="modal-content">
                       <span class="close-button">&times;</span>
                       <h2>Detail Lokasi</h2>
                       <p><strong>Kode Lokasi:</strong> L-001</p>
-                      <div class="form-group">
-                        <select id="kategoriAsset" name="kategoriAsset" required>
-                            <option value="">Pilih Gedung</option>
-                            <option value="Elektronik">Gedung 1</option>
-                            <option value="Furniture">Gedung 2</option>
-                            <option value="Kendaraan">Gedung 3</option>
-                        </select>
-                    </div>
-                      <img src="https://www.industriproperti.com/wp-content/uploads/2022/07/perkantoran1.jpg" alt="Gambar Gedung" style="max-width: 100%; height: auto;">
-                      <p><strong>Gedung 1</strong></p>
-                      <p>Jumlah Lantai: 5 Lantai</p>
-                      <p>Jumlah Ruangan: 10 Ruangan</p>
-                      <p>Jumlah Asset: 6 Jenis Asset</p>
-                      <div class="form-group">
-                        <select id="kategoriAsset" name="kategoriAsset" required>
-                            <option value="">Pilih Lantai</option>
-                            <option value="Elektronik">Lantai 1</option>
-                            <option value="Furniture">Lantai 2</option>
-                            <option value="Kendaraan">Lantai 3</option>
-                        </select>
-                    </div>
+                      <p><strong>Lokasi:</strong> Kebayoran Lama</p>
+                      <p><strong>Jumlah Asset:</strong> 6 Jenis Asset</p>
                     </div>
                   </div>
-                </div> 
-              </div>
+                </div>
             </div>
           
             <script>
               const detailButtons = document.querySelectorAll('.detail-button');
               const modal = document.getElementById('detailModal');
               const closeButton = document.querySelector('.close-button');
-              const pilihLantaiBtn = document.getElementById('pilihLantaiBtn');
           
               detailButtons.forEach(button => {
                 button.addEventListener('click', () => {
                   modal.style.display = 'block'; 
-          
-                  
                 });
               });
           
               closeButton.addEventListener('click', () => {
                 modal.style.display = 'none';   
-          
               });
           
               window.addEventListener('click', (event) => {
@@ -670,5 +637,6 @@ th {
                 }
               });
             </script>
-</body>  
+</body>
+
 </html>
