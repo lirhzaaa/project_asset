@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Asset;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB; // Tambahkan ini
 
 class AssetController extends Controller
 {
     public function index()
     {
-        // Mengambil semua asset dari database
-        $assets = Asset::all();
+        // Mengambil total asset per lokasi
+        $assets = DB::table('assets')
+                    ->select('kode', 'lokasi', DB::raw('COUNT(*) as total_asset'))
+                    ->groupBy('kode', 'lokasi')
+                    ->get();
 
         // Mengembalikan tampilan master_asset dengan data asset
         return view('master_asset', ['assets' => $assets]);
-        
     }
 
     public function create()
@@ -64,7 +67,6 @@ class AssetController extends Controller
         $asset = Asset::find($id);
         return response()->json($asset);
     }
-    
 
     public function update(Request $request, $id)
     {

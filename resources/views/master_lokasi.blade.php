@@ -541,102 +541,93 @@ th {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>L-001</td>
-                                <td>Kebayoran Lama</td>
-                                <td>6</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>L-002</td>
-                                <td>Tangerang Selatan</td>
-                                <td>3</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>L-003</td>
-                                <td>Jakarta Selatan</td>
-                                <td>9</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>L-004</td>
-                                <td>Jakarta Barat</td>
-                                <td>10</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>L-005</td>
-                                <td>Jawa Barat</td>
-                                <td>4</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>L-006</td>
-                                <td>Jakarta Tenggara</td>
-                                <td>7</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>L-007</td>
-                                <td>Jakarta Utara</td>
-                                <td>5</td>
-                                <td>
-                                    <a href="#" class="detail-button">Detail <i class="fas fa-arrow-right"></i></a>
-                                </td>
-                            </tr>
+                            @foreach($assets as $asset)
+                                <tr>
+                                    <td>{{ $asset->kode }}</td>
+                                    <td>{{ $asset->lokasi }}</td>
+                                    <td>{{ $asset->total_asset }}</td>
+                                    <td>
+                                        <button class="detail-button" data-kode="{{ $asset->kode }}" onclick="showAssetDetails('{{ $asset->kode }}')">Detail</button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <div class="table-footer">
-                        Showing 1 to 10 of 10 entries
+                        Showing 1 to {{ $assets->count() }} of {{ $assets->count() }} entries
                     </div>
                 </div>
 
                 <div id="detailModal" class="modal">
                     <div class="modal-content">
-                      <span class="close-button">&times;</span>
-                      <h2>Detail Lokasi</h2>
-                      <p><strong>Kode Lokasi:</strong> L-001</p>
-                      <p><strong>Lokasi:</strong> Kebayoran Lama</p>
-                      <p><strong>Jumlah Asset:</strong> 6 Jenis Asset</p>
+                        <span class="close-button">&times;</span>
+                        <h2>Detail Lokasi</h2>
+                        <p><strong>Kode Lokasi:</strong> <span id="kodeLokasi"></span></p>
+                        <p><strong>Lokasi:</strong> <span id="lokasiDetail"></span></p>
+                        <p><strong>Jumlah Asset:</strong> <span id="jumlahAsset"></span></p>
                     </div>
-                  </div>
                 </div>
+
             </div>
-          
-            <script>
-              const detailButtons = document.querySelectorAll('.detail-button');
-              const modal = document.getElementById('detailModal');
-              const closeButton = document.querySelector('.close-button');
-          
-              detailButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                  modal.style.display = 'block'; 
+        </div>
+
+        <script>
+            const detailButtons = document.querySelectorAll('.detail-button');
+            const modal = document.getElementById('detailModal');
+            const closeButton = document.querySelector('.close-button');
+
+            const kodeLokasiElement = document.getElementById('kodeLokasi');
+            const lokasiDetailElement = document.getElementById('lokasiDetail');
+            const jumlahAssetElement = document.getElementById('jumlahAsset');
+
+            detailButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const row = event.target.closest('tr');
+                    const kodeLokasi = row.querySelector('td:nth-child(1)').textContent.trim();
+                    const lokasi = row.querySelector('td:nth-child(2)').textContent.trim();
+                    const jumlahAsset = row.querySelector('td:nth-child(3)').textContent.trim();
+
+                    kodeLokasiElement.textContent = kodeLokasi;
+                    lokasiDetailElement.textContent = lokasi;
+                    jumlahAssetElement.textContent = jumlahAsset;
+
+                    modal.style.display = 'block';
                 });
-              });
-          
-              closeButton.addEventListener('click', () => {
-                modal.style.display = 'none';   
-              });
-          
-              window.addEventListener('click', (event) => {
+            });
+
+            closeButton.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
                 if (event.target === modal) {
-                  modal.style.display = 'none';
+                    modal.style.display = 'none';
                 }
-              });
-            </script>
+            });
+
+            function showAssetDetails(kodeLokasi) {
+                // Ambil semua baris di tabel
+                const rows = document.querySelectorAll('tbody tr');
+
+                // Looping melalui semua baris di tabel untuk menemukan detail yang sesuai
+                rows.forEach(row => {
+                    const kode = row.querySelector('td:nth-child(1)').textContent.trim();
+
+                    if (kode === kodeLokasi) {
+                        const lokasi = row.querySelector('td:nth-child(2)').textContent.trim();
+                        const jumlahAsset = row.querySelector('td:nth-child(3)').textContent.trim();
+
+                        // Isi modal dengan detail asset dan tampilkan
+                        kodeLokasiElement.textContent = kode;
+                        lokasiDetailElement.textContent = lokasi;
+                        jumlahAssetElement.textContent = jumlahAsset;
+
+                        modal.style.display = 'block';
+                    }
+                });
+            }
+        </script>
 </body>
+
 
 </html>
